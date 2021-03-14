@@ -166,6 +166,12 @@ impl Blob {
         Ok(())
     }
 
+    pub fn remove<S>(&mut self, name: S) -> Option<Value>
+        where S: Into<String>
+    {
+        self.content.remove(&name.into())
+    }
+
     /// Tries to get a named `Value` in the blob.
     pub fn get<S>(&self, name: S) -> Option<&Value>
     where
@@ -173,6 +179,15 @@ impl Blob {
     {
         self.content.get(name.into())
     }
+
+    /// Tries to get a named `Value` in the blob.
+    pub fn get_mut<S>(&mut self, name: S) -> Option<&mut Value>
+        where
+            S: Into<&'static str>,
+    {
+        self.content.get_mut(name.into())
+    }
+
 
     /// The number of bytes this blob will serialize to, before compression
     pub fn len_bytes(&self) -> usize {
